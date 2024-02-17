@@ -1,0 +1,17 @@
+.genres
+{
+    display: flex;
+    
+    gap: 5px;
+    .genre
+    {
+
+        background-color: aliceblue;
+        padding: 4px 6px;
+        font-size: 10px;
+        border-radius: 4.2px;
+        color: black;
+        white-space: nowrap;
+    }
+
+}
