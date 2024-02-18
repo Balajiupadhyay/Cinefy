@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -15,14 +14,16 @@ import Image from "../../../components/lazyLoadingImage/Image";
 import { PlayButton } from "../PlayButton";
 import VideoPopup from "../../../components/videoPopup/VideoPopup";
 
-const DetailsBanner = ({ video, crew }) => {
+const DetailsBanner = ({ video, crew, watchProviders }) => {
     const [show, setShow] = useState(false);
     const [videoId, setVideoId] = useState(null);
     const { mediaType, mediaId} = useParams();
     const {data, loading} = useFetch(`/${mediaType}/${mediaId}`);
+    // const {data, loading} = useFetch(`/${mediaType}/${mediaId}`);
     const {url} = useSelector((state) => state.home);
     const _genres = data?.genres?.map((g) => g.id);
 
+    // console.log(url)
     const officialTrailer = video?.find(result => result.type === "Trailer");
 
 
@@ -35,6 +36,19 @@ const DetailsBanner = ({ video, crew }) => {
         const minutes = totalMinutes % 60;
         return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
     };
+
+    console.log(watchProviders)
+    const inProvidersBuy = watchProviders?.IN?.buy?.map((provider) => ({
+        providerName:provider.provider_name, 
+        logoPath: provider.logo_path
+    })); 
+    const inProvidersRent = watchProviders?.IN?.rent?.map((provider) => ({
+        providerName:provider.provider_name, 
+        logoPath: provider.logo_path
+    })); 
+    
+    console.log(inProvidersBuy); 
+    console.log(inProvidersRent); 
 
     return (
         <div className="detailsBanner">
@@ -58,7 +72,9 @@ const DetailsBanner = ({ video, crew }) => {
                                     </div>
                                     <div className="right">
                                         <div className="title">
-                                        {data.name || data.title} {mediaType === "movie" ? `(${dayjs(data?.release_date).format("YYYY")})` : `(${dayjs(data?.first_air_date).format("YYYY")})`}
+                                        {data.name || data.title} {mediaType === "movie" ? 
+                                            `(${dayjs(data?.release_date).format("YYYY")})` : 
+                                            `(${dayjs(data?.first_air_date).format("YYYY")})`}
                                         </div>
                                         <div className="tagline">
                                             {data.tagline}
@@ -74,11 +90,25 @@ const DetailsBanner = ({ video, crew }) => {
                                                 }}
                                             >
                                                 <PlayButton/>
+
                                                 <span className="text">
                                                     Watch Trailer
                                                 </span>
+                                                
+
                                             </div>
+                                            <div className="playbtn" >
+                                                <a href={watchProviders?.IN?.link} target="_blank" className="watchOnline">
+                                                    <PlayButton/>
+                                                    <span className="text">
+                                                        Watch {mediaType==="movie" ? "Movie" : "TV Show"}
+                                                    </span>
+                                                </a>
+                                            </div>
+                        
                                         </div>
+                                      
+
                                         <div className="overview">
                                             <div className="heading">
                                                 Overview
@@ -118,6 +148,18 @@ const DetailsBanner = ({ video, crew }) => {
                                                     </span>
                                                 </div>
                                             )}
+                                            {/* {watchProviders && (
+                                                <div className="infoItem">
+                                                    <span className="text bold watchOnline">
+                                                        <a 
+                                                            href={watchProviders?.IN?.link} 
+                                                            target="_blank"
+                                                        >
+                                                            Watch {mediaType==="movie" ? "  Movie" : "  TV Show"}
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            )} */}
                                         </div>
                                         {director?.length > 0 && (
                                             <div className="info">

@@ -12,9 +12,10 @@ function Details()
   const { mediaType, mediaId} = useParams();
   const {data, loading} = useFetch(`/${mediaType}/${mediaId}/videos`);
   const {data: credits, loading: creditsLoading} = useFetch(`/${mediaType}/${mediaId}/credits`);
+  const {data: providers, loading: providersLoading } = useFetch(`/${mediaType}/${mediaId}/watch/providers`)
   return (
     <div>
-      <DetailsBanner video={data?.results} crew={credits?.crew}/>
+      <DetailsBanner video={data?.results} crew={credits?.crew} watchProviders={providers?.results}/>
       <Cast data={credits?.cast} loading={creditsLoading}/>
       <VideosSection data={data} loading={loading}/>
       <Similar mediaType={mediaType} mediaId={mediaId}/>
