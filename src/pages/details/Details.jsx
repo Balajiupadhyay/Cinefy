@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import useFetch from "../../hooks/useFetch"
 import { useParams } from "react-router-dom"
 import "./styles.scss"
