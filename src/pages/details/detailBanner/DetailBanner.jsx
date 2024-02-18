@@ -98,14 +98,14 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
                                                 
 
                                             </div>
-                                            <div className="playbtn" >
+                                            { watchProviders?.IN?.link && <div className="playbtn" >
                                                 <a href={watchProviders?.IN?.link} target="_blank" className="watchOnline">
                                                     <PlayButton/>
                                                     <span className="text">
                                                         Watch {mediaType==="movie" ? "Movie" : "TV Show"}
                                                     </span>
                                                 </a>
-                                            </div>
+                                            </div>}
                         
                                         </div>
                                       
