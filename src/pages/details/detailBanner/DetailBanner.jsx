@@ -35,21 +35,22 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
     const toHoursAndMinutes = (totalMinutes) => {
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
-        return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
+        return `${hours}h${minutes >= 0 ? ` ${minutes}m` : ""}`;
     };
 
-    console.log(watchProviders)
-    const inProvidersBuy = watchProviders?.IN?.buy?.map((provider) => ({
-        providerName:provider.provider_name, 
-        logoPath: provider.logo_path
-    })); 
-    const inProvidersRent = watchProviders?.IN?.rent?.map((provider) => ({
-        providerName:provider.provider_name, 
-        logoPath: provider.logo_path
-    })); 
+    // console.log(data.runtime)
+    // console.log(watchProviders)
+    // const inProvidersBuy = watchProviders?.IN?.buy?.map((provider) => ({
+    //     providerName:provider.provider_name, 
+    //     logoPath: provider.logo_path
+    // })); 
+    // const inProvidersRent = watchProviders?.IN?.rent?.map((provider) => ({
+    //     providerName:provider.provider_name, 
+    //     logoPath: provider.logo_path
+    // })); 
     
-    console.log(inProvidersBuy); 
-    console.log(inProvidersRent); 
+    // console.log(inProvidersBuy); 
+    // console.log(inProvidersRent); 
 
     return (
         <div className="detailsBanner">
@@ -73,9 +74,13 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
                                     </div>
                                     <div className="right">
                                         <div className="title">
-                                        {data.name || data.title} {mediaType === "movie" ? 
-                                            `(${dayjs(data?.release_date).format("YYYY")})` : 
-                                            `(${dayjs(data?.first_air_date).format("YYYY")})`}
+                                        {    
+                                            data.name || data.title} {mediaType === "movie" ? 
+                                            // `(${dayjs(data.release_date).isValid() ? dayjs(data.release_date).format("YYYY") : ""})` : 
+                                            // `(${dayjs(data.first_air_date).isValid() ? dayjs(data.first_air_date).format("YYYY") : ""})`
+                                            (dayjs(data.release_date).isValid() ? `(${dayjs(data.release_date).format("YYYY")})` : "") : 
+                                            (dayjs(data.first_air_date).isValid() ? `(${dayjs(data.first_air_date).format("YYYY")})` : "")
+                                        }
                                         </div>
                                         <div className="tagline">
                                             {data.tagline}
@@ -135,11 +140,11 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
                                                         Release Date:{" "}
                                                     </span>
                                                     <span className="text">
-                                                        {dayjs(data?.release_date).format("MMM D, YYYY")}
+                                                        {dayjs(data.release_date).isValid() ? dayjs(data.release_date).format("MMM D, YYYY") : ""}
                                                     </span>
                                                 </div>
                                             )}
-                                            {data.runtime && (
+                                            {data.runtime !== 0  && (
                                                 <div className="infoItem">
                                                     <span className="text bold">
                                                         Runtime:{" "}
