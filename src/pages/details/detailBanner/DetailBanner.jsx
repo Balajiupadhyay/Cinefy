@@ -20,11 +20,9 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
     const [videoId, setVideoId] = useState(null);
     const { mediaType, mediaId} = useParams();
     const {data, loading} = useFetch(`/${mediaType}/${mediaId}`);
-    // const {data, loading} = useFetch(`/${mediaType}/${mediaId}`);
     const {url} = useSelector((state) => state.home);
     const _genres = data?.genres?.map((g) => g.id);
 
-    // console.log(url)
     const officialTrailer = video?.find(result => result.type === "Trailer");
 
 
@@ -66,8 +64,7 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
                                 <div className="content">
                                     <div className="left">
                                         {data.poster_path ? (
-                                            <Image className="posterImg" src={url.backdrop + data.poster_path}/>
-                                            
+                                            <Image className="posterImg" src={url.backdrop + data.poster_path}/>    
                                         ) : (
                                             <Image className="posterImg" src={PosterFallback}/>
                                         )}
@@ -76,8 +73,6 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
                                         <div className="title">
                                         {    
                                             data.name || data.title} {mediaType === "movie" ? 
-                                            // `(${dayjs(data.release_date).isValid() ? dayjs(data.release_date).format("YYYY") : ""})` : 
-                                            // `(${dayjs(data.first_air_date).isValid() ? dayjs(data.first_air_date).format("YYYY") : ""})`
                                             (dayjs(data.release_date).isValid() ? `(${dayjs(data.release_date).format("YYYY")})` : "") : 
                                             (dayjs(data.first_air_date).isValid() ? `(${dayjs(data.first_air_date).format("YYYY")})` : "")
                                         }
@@ -96,12 +91,9 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
                                                 }}
                                             >
                                                 <PlayButton/>
-
                                                 <span className="text">
                                                     Watch Trailer
                                                 </span>
-                                                
-
                                             </div>
                                             { watchProviders?.IN?.link && <div className="playbtn" >
                                                 <a href={watchProviders?.IN?.link} target="_blank" className="watchOnline">
@@ -111,10 +103,7 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
                                                     </span>
                                                 </a>
                                             </div>}
-                        
                                         </div>
-                                      
-
                                         <div className="overview">
                                             <div className="heading">
                                                 Overview
@@ -293,8 +282,6 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
                                                 )}
                                             </div>
                                         )}
-
-
                                     </div>
                                 </div>
                                 <VideoPopup
@@ -304,11 +291,9 @@ const DetailsBanner = ({ video, crew, watchProviders }) => {
                                     setVideoId={setVideoId}
                                 />
                             </ContentWrapper>
-
                         </React.Fragment>
                     )}
-                </>
-                
+                </>     
             ) : (
                 <div className="detailsBannerSkeleton">
                     <ContentWrapper>
